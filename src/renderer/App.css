@@ -4,8 +4,9 @@
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&family=Roboto&display=swap');
-/* @import 'bootstrap/dist/css/bootstrap.min.css'; */
 @import url('https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/slate/bootstrap.min.css');
+@import url("@fortawesome/fontawesome-svg-core/styles.css");
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
 
 body {
   position: relative;
@@ -14,6 +15,7 @@ body {
   background: transparent;
   background-size:cover;
   font-family: sans-serif;
+  border-radius: 12px;
   overflow-y: hidden;
   padding:0;
   margin:0;
@@ -21,123 +23,251 @@ body {
   user-select: none;
 }
 
-
-.layout {
-  width: 100%;
-  height: 100%;
-}
-
-#page {
+#layout {
   display: flex;
   height: 100vh;
-  border-radius: 8px;
-  background-color: black;
-  /* calculate the height. Header is 30px */
-}
+  border-radius: 12px;
+  width: 100%;
+  background-color: var(--color-background);
 
-#content {
-  flex: 1 0 auto;
-  padding: 20px;
+  --color-primary: #88a5dc;
+  --color-background: #080b16;
+  --color-background-light: #141827;
+  --color-button-text: white;
+  --color-button-hint: #CCCCCC55;
+  --color-button-border: #14182755;
+  --color-button-background: #14182755;
+  --color-button-selected-text: #FFF;
+  --color-button-selected-background: #172b51;
+  --color-button-selected-border: #172b51;
+  --color-button-hover-text: white;
+  --color-button-hover-background: #172b51;
+  --color-button-hover-border: #172b51;
+  --color-section-title: #3573ab;
+  --color-app-title: white;
+  --color-app-icons: #EEE;
 
-  h2 {
-    margin:0 0 10px 0;
-  }
-}
-
-#content .block {
-  width: auto;
-  border: 1px solid #29292933;
-  border-radius: 4px;
-  padding: 20px;;
-  background: linear-gradient(to right, #11111122, black);
-}
-
-#sideBar {
-  width: 250px;
-  border-right:1px solid #111114;
-  background: linear-gradient(to right, #0a0a0a, #060606);
-  border-radius: 8px 0 0 8px;
-}
-
-.d-flex {
-  display: flex;
-}
-
-header {
-  /* background-image: url('https://media.discordapp.net/attachments/1017820087572496574/1024752747993645227/Ristr808_beautiful_gradient_for_the_web_78879fd1-79ed-4a17-9eb8-f74dfbd55135.png?width=959&height=548'); */
-  background-size: cover;
-  padding: 10px;
-  height: 80px;
-  border-radius: 12px 0 0 0;
-  -webkit-app-region: drag;
-
-
-  h4 {
-    display: block;
-    margin: 17px 0px 0px 5px;
-    color: #555
+  &.theme-dark-red {
+    --color-primary: #FA4232;
+    --color-background: black;
+    --color-background-light: #050505;
+    --color-button-text: white;
+    --color-button-hint: #3F3F3F;
+    --color-button-border: #000;
+    --color-button-background: #030303;
+    --color-button-selected-text: var(--color-primary);
+    --color-button-selected-background: #030303;
+    --color-button-selected-border: var(--color-primary);
+    --color-button-hover-text: var(--color-primary);
+    --color-button-hover-background: black;
+    --color-button-hover-border: black;
+    --color-section-title: #333;
+    --color-app-title: white;
+    --color-app-icons: #555;
   }
 
-  hr {
-    border-color:#111
+  &.theme-dark-green {
+    --color-primary: #3dc026;
+    --color-background: black;
+    --color-background-light: #050505;
+    --color-button-text: white;
+    --color-button-hint: #3F3F3F;
+    --color-button-border: #000;
+    --color-button-background: #030303;
+    --color-button-selected-text: var(--color-primary);
+    --color-button-selected-background: #030303;
+    --color-button-selected-border: var(--color-primary);
+    --color-button-hover-text: var(--color-primary);
+    --color-button-hover-background: black;
+    --color-button-hover-border: black;
+    --color-section-title: #333;
+    --color-app-title: white;
+    --color-app-icons: #555;
   }
 
-  h5 {
-    padding:0 0 0 10px;
-    color: #333;
-    text-transform: uppercase;
+  &.theme-dark-yellow {
+    --color-primary: #dec224;
+    --color-background: black;
+    --color-background-light: #050505;
+    --color-button-text: white;
+    --color-button-hint: #3F3F3F;
+    --color-button-border: #000;
+    --color-button-background: #030303;
+    --color-button-selected-text: var(--color-primary);
+    --color-button-selected-background: #030303;
+    --color-button-selected-border: var(--color-primary);
+    --color-button-hover-text: var(--color-primary);
+    --color-button-hover-background: black;
+    --color-button-hover-border: black;
+    --color-section-title: #333;
+    --color-app-title: white;
+    --color-app-icons: #555;
   }
 
-  a:link,a:active, a:visited {
-    color: #888;
-    cursor: pointer;
-    text-decoration: none;
+  &.theme-dark-purple {
+    --color-primary: #7e30d7;
+    --color-background: black;
+    --color-background-light: #050505;
+    --color-button-text: white;
+    --color-button-hint: #3F3F3F;
+    --color-button-border: #000;
+    --color-button-background: #030303;
+    --color-button-selected-text: var(--color-primary);
+    --color-button-selected-background: #030303;
+    --color-button-selected-border: var(--color-primary);
+    --color-button-hover-text: var(--color-primary);
+    --color-button-hover-background: black;
+    --color-button-hover-border: black;
+    --color-section-title: #333;
+    --color-app-title: white;
+    --color-app-icons: #555;
   }
-  a:hover {
-    color: #AAA;
 
+  &.theme-dark-blue {
+    --color-primary: #2678c0;
+    --color-background: black;
+    --color-background-light: #050505;
+    --color-button-text: white;
+    --color-button-hint: #3F3F3F;
+    --color-button-border: #000;
+    --color-button-background: #030303;
+    --color-button-selected-text: var(--color-primary);
+    --color-button-selected-background: #030303;
+    --color-button-selected-border: var(--color-primary);
+    --color-button-hover-text: var(--color-primary);
+    --color-button-hover-background: black;
+    --color-button-hover-border: black;
+    --color-section-title: #333;
+    --color-app-title: white;
+    --color-app-icons: #555;
   }
 
-  ul {
-    padding:0 0 0 10px;
-    li {
-      list-style-type: none;
-      background-color:#00000044;
-      padding:8px;
-      margin-top:2px;
-      border-radius: 4px;
-      font-size:.9rem;
-      color: #888;
-      cursor: pointer;
-      &:hover {
-        color: #AAA;
-      }
+  &.theme-discord {
+    --color-primary: #4752C4;
+    --color-background: #18191C;
+    --color-background-light: #202225;
+    --color-button-text: white;
+    --color-button-hint: #CCC;
+    --color-button-border: #18191C;
+    --color-button-background: #202225;
+    --color-button-selected-text: white;
+    --color-button-selected-background: #4752C4;
+    --color-button-selected-border: #4752C4;
+    --color-button-hover-text: white;
+    --color-button-hover-background: #4752C4;
+    --color-button-hover-border: #4752C4;
+    --color-section-title: #333;
+    --color-app-title: white;
+    --color-app-icons: #666;
+  }
+
+  &.theme-discord-light {
+    --color-primary: #4752C4;
+    --color-background: white;
+    --color-background-light: #F2F3F5;
+    --color-button-text: #666;
+    --color-button-hint: #AAA;
+    --color-button-border: #F1F2F4;
+    --color-button-background: #F1F2F4;
+    --color-button-selected-text: white;
+    --color-button-selected-background: #4752C4;
+    --color-button-selected-border: #4752C4;
+    --color-button-hover-text: #4752C4;
+    --color-button-hover-background: #4752C4;
+    --color-button-hover-border: #4752C4;
+    --color-section-title: #333;
+    --color-app-title: #333;
+    --color-app-icons: #333;
+  }
+
+  &.theme-sunlight {
+    --color-primary: #F7CE45;
+    --color-background: #16171B;
+    --color-background-light: #1F2125;
+    --color-button-text: white;
+    --color-button-hint: #555;
+    --color-button-border: #1F2125;
+    --color-button-background: #1F2125;
+    --color-button-selected-text: black;
+    --color-button-selected-background: var(--color-primary);
+    --color-button-selected-border: var(--color-primary);
+    --color-button-hover-text: white;
+    --color-button-hover-background: red;
+    --color-button-hover-border: var(--color-primary);
+    --color-section-title: #555;
+    --color-app-title: white;
+    --color-app-icons: #EEE;
+  }
+
+  &.theme-grayscale {
+    --color-primary: #666;
+    --color-background: white;
+    --color-background-light: #F2F3F5;
+    --color-button-text: #666;
+    --color-button-hint: #AAA;
+    --color-button-border: #F1F2F4;
+    --color-button-background: #F1F2F4;
+    --color-button-selected-text: white;
+    --color-button-selected-background: #666;
+    --color-button-selected-border: #666;
+    --color-button-hover-text: #666;
+    --color-button-hover-background: #666;
+    --color-button-hover-border: #666;
+    --color-section-title: #333;
+    --color-app-title: #333;
+    --color-app-icons: #333;
+
+    .button.hasImage, .headerBackground {
+      filter:grayscale(100%)
     }
   }
 }
 
-textarea {
-  background-color: transparent;
-  color: white;
-  padding: 10px;
-  border:none;
-  resize: none;
-  outline: none;
-  width: calc(100% - 25px);
+.container-fluid {
+  box-sizing: border-box;
+  overflow-x: hidden;
+
+  &.radiused {
+    border-radius: 4px;
+  }
 }
 
-.button {
-  background-color: #000;
-  border: 1px solid #111;
-  padding: 5px 10px;
-  border-radius: 3px;
-  margin-right: 5px;
-  font-size: 14px;
+.border-radius {
+  border-radius: 12px;
+}
+
+.content {
+  margin-top: 50px;
+  z-index: 0;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #111;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #222;
+}
+
+h6 {
+  color: var(--color-section-title);
   font-weight: bold;
   text-transform: uppercase;
-  cursor: pointer;
+  font-family: 'Roboto';
+}
 
-  &:hover {
-    color:#0d6075;
-  }
+.card {
+  background-color: var(--color-button-background) !important;
+  border:1px solid var(--color-button-border) !important;
+  padding: 20px;
+  width: 100%;
 }

@@ -12,8 +12,13 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import PromptSettings from '../constants/PromptSettings';
+import promptProcessor from './promptProcessor';
+
+const store = new Store();
 
 class AppUpdater {
   constructor() {
@@ -61,22 +66,15 @@ const createWindow = async () => {
     await installExtensions();
   }
 
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
-
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
-    height: 728,
+    height: 768,
     autoHideMenuBar: true,
     transparent: true,
     frame: false,
-    icon: getAssetPath('icon.png'),
+    resizable: false,
+    icon: path.join(__dirname, '../../IconApp.png'),
     webPreferences: {
       sandbox: false,
       preload: app.isPackaged
@@ -116,9 +114,55 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
+/// ////////////////////////////////////////
+/// ////////////////////////////////////////
+/// FIRST SETTINGS LOAD
+/// ////////////////////////////////////////
+/// ////////////////////////////////////////
+
+if (!store.get('settings') || process.env.NODE_ENV === 'development') {
+  store.set('settings', PromptSettings);
+  store.set('history', []);
+}
+
+/// ////////////////////////////////////////
+/// ////////////////////////////////////////
+/// IPC LISTENERS
+/// ////////////////////////////////////////
+/// ////////////////////////////////////////
+
+ipcMain.on('electron-store-get', async (event, val) => {
+  event.returnValue = store.get(val);
+});
+ipcMain.on('electron-store-set', async (event, key, val) => {
+  store.set(key, val);
+});
+
+ipcMain.on('generate-prompt', async (event) => {
+  const prompt = promptProcessor(store.get('settings'));
+  event.returnValue = prompt;
+});
+
+ipcMain.on('refresh-theme', async (event) => {
+  event.reply('on-refresh-theme');
+});
+
+ipcMain.on('refresh-options', async (event) => {
+  event.reply('on-refresh-options');
+});
+
+ipcMain.on('save-to-history', async (event, value) => {
+  const history: any = store.get('history');
+  history.push({
+    date: Date.now(),
+    liked: null,
+    promptValue: value.promptValue,
+    promptOptions: value.promptOptions,
+    fullPrompt: value.fullPrompt,
+  });
+  store.set('history', history);
+  event.returnValue = true;
+});
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even

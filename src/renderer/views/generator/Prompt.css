@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+.promptView {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    left:0;
+    border-top: 1px solid #22222222;
+    background: var(--color-background-light);
+
+    strong {
+      color: var(--color-primary)
+    }
+}
+
+.promptInput {
+    margin-left: 10px;
+    width: calc(100% - 90px);
+    display: inline-block;
+    background: var(--color-background);
+    font-family: 'Source Code Pro';
+    border-radius: 8px;
+    border: 1px solid var(--color-background-light);
+    color: var(--color-section-title);
+
+    input:focus {
+        color: var(--color-section-title);
+        background: var(--color-background);
+        border:0;
+        outline-style: none;
+        box-shadow: none;
+        border-color: transparent;
+    }
+
+    input {
+      width:55vw;
+      border: 0;
+      display: inline-block;
+      background: var(--color-background);
+      font-family: 'Source Code Pro';
+      border: 0;
+      color: var(--color-section-title);
+    }
+}
+
+.optionPreview {
+    position: absolute;
+    right: 17px;
+    top:9px;
+    cursor: pointer;
+    text-align: right;
+    border-radius: 5px;
+    color: var(--color-primary);
+    background-color:var(--color-background-light);
+    padding: 5px
+}
+
+.monospaced {
+    font-family: 'Source Code Pro';
+    color: #444
+}
+
+.copyPromptButton {
+    background-color: var(--color-button-selected-background);
+    padding: 10px;
+    color: var(--color-button-selected-text);
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid var(--color-button-selected-border);
+    font-weight: bold;
+    cursor: pointer;
+    height: 46px;
+    margin-top: 2px;
+    &:hover {
+        background-color: var(--color-button-selected-text);
+        color: var(--color-button-selected-background);
+        border:none;
+        animation: tada;
+        animation-duration: 1s;
+    }
+}
+
+.toast {
+    position: absolute;
+    bottom:0px;
+    z-index: 5;
+    right: 0;
+    width: 100vw;
+    text-align: center;
+    color: black;
+    background-color: var(--color-primary);
+}

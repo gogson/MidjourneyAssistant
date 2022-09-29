@@ -1,36 +1,47 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { Sidebar } from './views/sidebar/Sidebar';
-import { Prompt } from './prompt/Prompt'
-import { Generator } from './views/pages/generator/Generator';
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 
-const Rendering = () => {
-  return (
-    <div className="layout">
-      <h2>Rendering</h2>
-      <div className='block'>
-        This tool helps you generate full prompts.
-        <br />
-        Set your preferences, enter a prompt to imagine and paste it to MD !
-      </div>
-    </div>
-  );
-};
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useState } from 'react';
+import Generator from './views/generator/Generator';
+import Header from './views/header/Header';
+import Artstyle from './views/artstyle/Artstyle';
+import Settings from './views/settings/Settings';
+import History from './views/history/History';
+
+// FontAwesome
+library.add(fas);
 
 export default function App() {
+  const [theme, setTheme] = useState(window.electron.store.get('theme') || '');
+
+  window.electron.onRefreshTheme(() => {
+    setTheme(window.electron.store.get('theme'));
+  });
+
   return (
     <Router>
-      <div id="page">
-        <div id="sideBar">
-          <Sidebar />
-        </div>
-        <div id="content">
-          <Routes>
-            <Route path="/" element={<Generator />} />
-            <Route path="/rendering" element={<Rendering />} />
-          </Routes>
-        </div>
+      <div id="layout" className={`border-radius ${theme}`}>
+        <Container fluid className="p-0 m-0 border-radius">
+          <Row>
+            <Col xs={12} className="p-0">
+              <Header />
+            </Col>
+            <Col xs={12} className="p-4 content">
+              <Routes>
+                <Route path="/" element={<Generator />} />
+                <Route path="/artstyle" element={<Artstyle />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/history" element={<History />} />
+              </Routes>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </Router>
   );
